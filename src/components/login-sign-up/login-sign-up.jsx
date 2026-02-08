@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { FormController } from "../../common/components/reusable-form";
+import db from "../../database/db.json";
 export default function LoginComponents() {
   const formApiRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,17 +28,41 @@ export default function LoginComponents() {
       label: "Remember me",
     },
   ];
+  const handleLogin = async (data) => {
+    try {
+      setIsSubmitting(true);
+
+      // fake API delay
+      await new Promise((r) => setTimeout(r, 1200));
+
+      const user = db.users.find(
+        (u) => u.email === data.email && u.password === data.password,
+      );
+
+      if (!user) {
+        throw new Error("Invalid email or password");
+      }
+
+      console.log("✅ Logged in user:", user);
+
+      // Optional: store session
+      localStorage.setItem("user", JSON.stringify(user));
+
+      alert("Login successful 🎉");
+    } catch (err) {
+      alert("not login" , err)
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className=" max-w-md flex flex-col mx-auto p-6 space-y-6">
       <FormController
         fields={fields}
         defaultValues={{ email: "", password: "", remember: false }}
-        onSubmit={async (data) => {
-          await new Promise((r) => setTimeout(r, 1500)); // fake API
-          console.log("FORM DATA:", data);
-        }}
-        onFormReady={(api) => ((formApiRef).current = api)}
+        onSubmit={handleLogin}
+        onFormReady={(api) => (formApiRef.current = api)}
         onSubmittingChange={setIsSubmitting}
       />
       <button

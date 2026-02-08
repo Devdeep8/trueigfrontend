@@ -6,10 +6,26 @@ export default function SignupComponent() {
 
   const handleSubmit = async (data) => {
     try {
-      await new Promise((r) => setTimeout(r, 1500)); // fake API
-      console.log("FORM DATA:", data);
-    } catch (error) {
-      console.log(error);
+      setIsSubmitting(true);
+
+      const res = await fetch("http://localhost:4000/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: crypto.randomUUID(),
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        }),
+      });
+
+      const user = await res.json();
+      console.log("User created:", user);
+      alert("Signup successful 🎉");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
