@@ -1,7 +1,27 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FormController } from "../../common/components/reusable-form";
 export default function SignupComponent() {
-  const [formApi, setFormApi] = useState(null); // 👈 store controller API
+  const formApiRef = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (data) => {
+    try {
+      await new Promise((r) => setTimeout(r, 1500)); // fake API
+      console.log("FORM DATA:", data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleLogaind = async (data) => {
+    formApiRef.current = data;
+    console.log(data, "debug");
+  };
+
+  const handleSubmitting = (data) => {
+    console.log(data);
+    setIsSubmitting(data);
+  };
 
   const fields = [
     {
@@ -25,6 +45,13 @@ export default function SignupComponent() {
           message: "Please enter a valid email address",
         },
       },
+      onChange: (value) => {
+        console.log("Email changed:", value);
+        // e.g. debounce API: checkEmailExists(value)
+      },
+      onBlur: (value) => {
+        console.log("Email blurred:", value);
+      },
     },
     {
       type: "password",
@@ -46,16 +73,17 @@ export default function SignupComponent() {
       <FormController
         fields={fields}
         defaultValues={{ email: "", password: "", remember: false }}
-        onSubmit={(data) => console.log(data, "this is the data")}
-        onFormReady={setFormApi}
+        onSubmit={handleSubmit}
+        onFormReady={handleLogaind}
+        onSubmittingChange={handleSubmitting}
       />
 
       <button
-        onClick={() => formApi?.submit()}
-        disabled={formApi?.isSubmitting}
+        onClick={() => formApiRef.current?.submit()}
+        disabled={isSubmitting}
         className="bg-black text-white px-4 py-2  rounded"
       >
-        {formApi?.isSubmitting ? "Sign Up..." : "SignUp"}
+        {isSubmitting ? "Sign Up..." : "SignUp"}
       </button>
     </div>
   );

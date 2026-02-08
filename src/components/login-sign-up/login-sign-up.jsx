@@ -37,7 +37,7 @@ export default function LoginComponents() {
           await new Promise((r) => setTimeout(r, 1500)); // fake API
           console.log("FORM DATA:", data);
         }}
-        onFormReady={(api) => (formApiRef.current = api)}
+        onFormReady={(api) => ((formApiRef).current = api)}
         onSubmittingChange={setIsSubmitting}
       />
       <button

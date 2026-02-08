@@ -16,7 +16,10 @@ export default function FormController({
     watch,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm({ defaultValues });
+  } = useForm({ defaultValues , 
+    mode : "onChange", 
+    reValidateMode : "onBlur"
+  });
 
   // Store API in ref so it doesn't change every render
   const apiRef = useRef(null);

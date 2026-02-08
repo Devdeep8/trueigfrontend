@@ -1,9 +1,4 @@
-export default function AuthLayout({
-  children,
-  title,
-  subtitle,
-  imageSrc,
-}) {
+export default function AuthLayout({ children, title, subtitle, imageSrc }) {
   return (
     <main className="h-screen  flex items-center justify-center">
       {/* Left Image */}
@@ -21,9 +16,7 @@ export default function AuthLayout({
       <div className="w-full max-w-xl mx-auto ">
         <div className="mb-6 flex flex-col justify-center text-center items-center">
           {title && <h1 className="text-2xl font-semibold mb-4">{title}</h1>}
-          {subtitle && (
-            <p className="text-muted-foreground mt-1">{subtitle}</p>
-          )}
+          {subtitle && <p className="text-muted-foreground mt-1">{subtitle}</p>}
         </div>
 
         {children}
