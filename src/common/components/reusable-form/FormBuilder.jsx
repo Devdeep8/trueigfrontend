@@ -2,11 +2,13 @@ import { Controller } from "react-hook-form";
 import InputField from "./fields/InputField";
 import PasswordField from "./fields/PasswordField";
 import CheckboxField from "./fields/CheckboxField";
+import SelectField from "./fields/SelectField";
 
 const FIELD_MAP = {
   input: InputField,
   password: PasswordField,
   checkbox: CheckboxField,
+  select : SelectField
 };
 
 export default function FormBuilder({ fields, control, errors }) {

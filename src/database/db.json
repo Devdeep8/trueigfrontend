@@ -7,5 +7,14 @@
       "password": "M@DeX9KI8VJL"
     }
   ],
-  "task" : []
+  "task": [
+    {
+      "id": "c7d56c8c-9865-4011-b3dd-03ba71af7b74",
+      "title": "test",
+      "status": "todo",
+      "dueDate": "11/11/2003",
+      "assigneeId": "cd83a70e-4f07-4a32-b0bd-ff991da3fbca",
+      "createdAt": "2026-02-08T14:56:03.853Z"
+    }
+  ]
 }

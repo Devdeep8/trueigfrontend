@@ -1,7 +1,9 @@
 import { useRef } from "react";
 import { FormController } from "../../common/components/reusable-form";
 import { useLogin } from "./uselogin";
+import { useNavigate } from "react-router-dom";
 export default function LoginComponents() {
+  const navigate = useNavigate()
   const formApiRef = useRef(null);
   const {login , isSubmitting } = useLogin()
 
@@ -32,7 +34,9 @@ export default function LoginComponents() {
     try {
       const user = await login(data);
       console.log("✅ Logged in:", user);
+
       alert("Login successful 🎉");
+      navigate("/dashboard" , {replace : true})
     } catch (err) {
       // error already handled in hook
       alert("login error " , err)
