@@ -1,6 +1,6 @@
 import App from "../App.jsx";
-import Login from "../components/login-sign-up/login-sign-up.jsx";
-
+import LoginPage from "../pages/loginpage/index.jsx";
+import SignUpPage from "../pages/signuppage/index.jsx";
 
 const routes = [
     {
@@ -9,7 +9,11 @@ const routes = [
     },
     {
     path: "/login",
-    element: <Login />,
+    element: <LoginPage />,
+  },
+    {
+    path: "/signup",
+    element: <SignUpPage />,
   },
 
 ]
