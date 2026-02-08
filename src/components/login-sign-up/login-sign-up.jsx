@@ -1,9 +1,9 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { FormController } from "../../common/components/reusable-form";
-import db from "../../database/db.json";
+import { useLogin } from "./uselogin";
 export default function LoginComponents() {
   const formApiRef = useRef(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {login , isSubmitting } = useLogin()
 
   const fields = [
     {
@@ -30,29 +30,13 @@ export default function LoginComponents() {
   ];
   const handleLogin = async (data) => {
     try {
-      setIsSubmitting(true);
-
-      // fake API delay
-      await new Promise((r) => setTimeout(r, 1200));
-
-      const user = db.users.find(
-        (u) => u.email === data.email && u.password === data.password,
-      );
-
-      if (!user) {
-        throw new Error("Invalid email or password");
-      }
-
-      console.log("✅ Logged in user:", user);
-
-      // Optional: store session
-      localStorage.setItem("user", JSON.stringify(user));
-
+      const user = await login(data);
+      console.log("✅ Logged in:", user);
       alert("Login successful 🎉");
     } catch (err) {
-      alert("not login" , err)
-    } finally {
-      setIsSubmitting(false);
+      // error already handled in hook
+      alert("login error " , err)
+      console.log(err)
     }
   };
 
@@ -63,7 +47,6 @@ export default function LoginComponents() {
         defaultValues={{ email: "", password: "", remember: false }}
         onSubmit={handleLogin}
         onFormReady={(api) => (formApiRef.current = api)}
-        onSubmittingChange={setIsSubmitting}
       />
       <button
         onClick={() => formApiRef.current?.submit()}
